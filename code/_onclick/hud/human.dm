@@ -72,6 +72,12 @@
 	using.alpha = ui_alpha
 	static_inventory += using
 
+	using = new /obj/screen/wield
+	using.icon = ui_style
+	using.color = ui_color
+	using.alpha = ui_alpha
+	static_inventory += using
+
 	using = new /obj/screen/act_intent()
 	using.icon_state = mymob.a_intent
 	using.color = ui_color
@@ -320,7 +326,14 @@
 	mymob.throw_icon.color = ui_color
 	mymob.throw_icon.alpha = ui_alpha
 	hotkeybuttons += mymob.throw_icon
-
+/*
+	mymob.wield_icon = new /obj/screen/wield()
+	mymob.wield_icon.icon = ui_style
+	mymob.wield_icon.screen_loc = ui_wield
+	//mymob.wield_icon = ui_color
+	//mymob.wield_icon.alpha = ui_alpha
+	static_inventory += mymob.wield_icon
+*/
 	internals = new /obj/screen/internals()
 	infodisplay += internals
 

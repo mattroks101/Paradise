@@ -356,6 +356,18 @@
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
 
+/obj/screen/wield
+	name = "wield"
+	icon = 'icons/mob/screen_midnight.dmi'
+	icon_state = "wield"
+	screen_loc = ui_wield
+
+/obj/screen/wield/Click()
+	var/mob/living/M = usr
+	var/obj/item/weapon/W = M.get_active_hand()
+	if(W)
+		W.attempt_wield(M)
+
 /obj/screen/language_menu
 	name = "language menu"
 	icon = 'icons/mob/screen_midnight.dmi'

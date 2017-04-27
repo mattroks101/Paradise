@@ -62,6 +62,7 @@
 
 	var/list/nospecies = list("Abductor", "Shadowling", "Neara", "Monkey", "Stok", "Farwa", "Wolpin") //species that won't show their race no matter what
 
+	var/wielded = 0
 	var/displayed_species = get_species()
 	for(var/obj/item/clothing/C in src)			//Disguise checks
 		if(C == src.head || C == src.wear_suit || C == src.wear_mask || C == src.w_uniform || C == src.belt || C == src.back)
@@ -120,17 +121,25 @@
 
 	//left hand
 	if(l_hand && !(l_hand.flags & ABSTRACT))
+		if(istype(l_hand,/obj/item/weapon))
+			var/obj/item/weapon/W = l_hand
+			if(W.wielded)
+				wielded = 1
 		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] [l_hand.blood_color != "#030303" ? "blood-stained":"oil-stained"] [l_hand.name] in [t_his] left hand!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] [l_hand.blood_color != "#030303" ? "blood-stained":"oil-stained"] [l_hand.name] in [t_his] [wielded ? "hands" : "left hand"]!</span>\n"
 		else
-			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] left hand.\n"
+			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] [wielded ? "hands" : "left hand"].\n"
 
 	//right hand
 	if(r_hand && !(r_hand.flags & ABSTRACT))
+		if(istype(r_hand,/obj/item/weapon))
+			var/obj/item/weapon/W = r_hand
+			if(W.wielded)
+				wielded = 1
 		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] [r_hand.blood_color != "#030303" ? "blood-stained":"oil-stained"] [r_hand.name] in [t_his] right hand!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] [r_hand.blood_color != "#030303" ? "blood-stained":"oil-stained"] [r_hand.name] in [t_his] [wielded ? "hands" : "right hand"]!</span>\n"
 		else
-			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
+			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] [wielded ? "hands" : "right hand"].\n"
 
 	//gloves
 	if(gloves && !skipgloves && !(gloves.flags & ABSTRACT))

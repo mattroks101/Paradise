@@ -22,22 +22,27 @@
 /*
  * Twohanded
  */
-/obj/item/weapon/twohanded
+/obj/item/weapon
 	var/wielded = 0
 	var/force_unwielded = 0
 	var/force_wielded = 0
-	var/wieldsound = null
+	var/wieldsound = 'sound/weapons/raise.ogg'
 	var/unwieldsound = null
+	var/wielded_icon = null
 
-/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
+/obj/item/weapon/proc/unwield(mob/living/carbon/user)
 	if(!wielded || !user) return
 	wielded = 0
-	force = force_unwielded
+	if(force_unwielded)
+		force = force_unwielded
+	else
+		force = (force / 1.5)
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
 		name = copytext(name,1,sf)
 	else //something wrong
 		name = "[initial(name)]"
+	update_unwield_icon()
 	update_icon()
 	if(user)
 		user.update_inv_r_hand()
@@ -53,7 +58,7 @@
 		O.unwield()
 	return
 
-/obj/item/weapon/twohanded/proc/wield(mob/living/carbon/user)
+/obj/item/weapon/proc/wield(mob/living/carbon/user)
 	if(wielded) return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -64,16 +69,22 @@
 		to_chat(user, "<span class='warning'>You need your other hand to be empty!</span>")
 		return
 	wielded = 1
-	force = force_wielded
-	name = "[name] (Wielded)"
-	update_icon()
+	if(force_wielded)
+		force = force_wielded
+	else
+		force = (force * 1.5)
+	name = "wielded [name]"
+	update_wield_icon()
+	update_icon()//Legacy
 	if(user)
 		user.update_inv_r_hand()
 		user.update_inv_l_hand()
 	if(isrobot(user))
-		to_chat(user, "<span class='notice'>You dedicate your module to [name].</span>")
+		//to_chat(user, "<span class='notice'>You dedicate your module to [name].</span>")
+		user.visible_message("<span class='warning'>[user] dedicates a module to the [initial(name)]s.")
 	else
-		to_chat(user, "<span class='notice'>You grab the [name] with both hands.</span>")
+		//to_chat(user, "<span class='notice'>You grab the [name] with both hands.</span>")
+		user.visible_message("<span class='warning'>[user] grabs the [initial(name)] with both hands.")
 	if(wieldsound)
 		playsound(loc, wieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
@@ -82,7 +93,7 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/dropped(mob/user)
+/obj/item/weapon/dropped(mob/user)
 	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
@@ -91,9 +102,23 @@
 			O.unwield(user)
 	return unwield(user)
 
-/obj/item/weapon/twohanded/update_icon()
-	return
+/obj/item/weapon/proc/update_wield_icon()
+	if((wielded) && wielded_icon)
+		icon_state = wielded_icon
 
+/obj/item/weapon/proc/update_unwield_icon()//That way it doesn't interupt any other special icon_states.
+	if((wielded) && wielded_icon)
+		icon_state = "[initial(icon_state)]"
+
+//For general weapons.
+/obj/item/weapon/proc/attempt_wield(mob/user)
+	if(wielded) //Trying to unwield it
+		unwield(user)
+	else //Trying to wield it
+		wield(user)
+
+
+//Left in so as not to change the behavior of the old two-handed weapons.
 /obj/item/weapon/twohanded/attack_self(mob/user)
 	..()
 	if(wielded) //Trying to unwield it
