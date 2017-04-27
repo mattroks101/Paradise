@@ -695,6 +695,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					"<span class='danger'>\The [owner]'s [src.name] flies off in an arc!</span>",\
 					"<span class='moderate'><b>Your [src.name] goes flying off!</b></span>",\
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
+			playsound(owner, 'sound/effects/gore/severed.ogg', 100, 0)
 		if(DROPLIMB_BURN)
 			var/gore = "[(status & ORGAN_ROBOT) ? "": " of burning flesh"]"
 			owner.visible_message(
@@ -708,6 +709,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				"<span class='danger'>\The [owner]'s [src.name] explodes[gore]!</span>",\
 				"<span class='moderate'><b>Your [src.name] explodes[gore]!</b></span>",\
 				"<span class='danger'>You hear the [gore_sound].</span>")
+			playsound(owner, 'sound/effects/gore/chop6.ogg', 100 , 0)//Splat.
 
 	var/mob/living/carbon/human/victim = owner //Keep a reference for post-removed().
 	// Let people make limbs become fun things when removed
@@ -746,7 +748,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(!clean)
 				// Throw limb around.
 				if(src && istype(loc,/turf))
+					var/turf/location = get_turf(src)//Adding blood to the ground where the limb was chopped off at.
 					dropped_part.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),30)
+					add_blood(location)
 				dir = 2
 			return dropped_part
 		else
@@ -817,10 +821,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if((status & ORGAN_BROKEN) || cannot_break)
 		return
 	if(owner)
-		owner.visible_message(\
-			"<span class='warning'>You hear a loud cracking sound coming from \the [owner].</span>",\
-			"<span class='danger'>Something feels like it shattered in your [name]!</span>",\
-			"You hear a sickening crack.")
+		//owner.visible_message(\
+		//	"<span class='warning'>You hear a loud cracking sound coming from \the [owner].</span>",\
+		//	"<span class='danger'>Something feels like it shattered in your [name]!</span>",\
+		//	"You hear a sickening crack.")
+		playsound(owner, "trauma", 75, 0)
 		if(owner.species && !(owner.species.flags & NO_PAIN))
 			owner.emote("scream")
 
