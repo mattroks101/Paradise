@@ -9,7 +9,9 @@
 	slot_flags = SLOT_BACK
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
+	fire_sound = "sound/weapons/shotgun.ogg"
 	var/recentpump = 0 // to prevent spammage
+
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user, params)
 	. = ..()
