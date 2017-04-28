@@ -148,7 +148,7 @@
 			//announce = 1
 	/*	if(ishuman(affecting))
 			switch(hit_zone)
-				/*if("mouth")
+				if("mouth")
 					if(announce)
 						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s mouth!</span>")
 					if(affecting.silent < 3)
@@ -157,7 +157,7 @@
 					if(announce)
 						assailant.visible_message("<span class='warning'>[assailant] covers [affecting]'s eyes!</span>")
 					if(affecting.eye_blind < 3)
-						affecting.eye_blind = 3*///These are being left in the code as an example for adding new hit-zone based things.
+						affecting.eye_blind = 3//These are being left in the code as an example for adding new hit-zone based things.
 
 		if(force_down)
 			if(affecting.loc != assailant.loc)
