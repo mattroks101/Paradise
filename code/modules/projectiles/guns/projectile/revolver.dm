@@ -279,6 +279,7 @@
 	sawn_desc = "Omar's coming!"
 	unique_rename = 1
 	unique_reskin = 1
+	wielded_icon = "dshotgun1"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/New()
 	..()
@@ -384,6 +385,7 @@
 	fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
 	suppressed = 1
 	needs_permit = 0 //its just a cane beepsky.....
+	wielded_icon = null
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/cane/is_crutch()
 	return 1

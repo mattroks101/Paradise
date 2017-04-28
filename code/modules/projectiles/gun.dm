@@ -61,6 +61,9 @@
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
 	var/datum/action/toggle_scope_zoom/azoom
 
+	var/one_hand_penalty
+
+
 /obj/item/weapon/gun/New()
 	..()
 	if(gun_light)
@@ -102,10 +105,10 @@
 			user.visible_message("<span class='danger'>[user] fires [src]!</span>", "<span class='danger'>You fire [src]!</span>", "You hear \a [fire_sound_text]!")
 
 	if(weapon_weight >= WEAPON_MEDIUM)
-		if(user.get_inactive_hand())
-			if(prob(15))
-				if(user.drop_item())
-					user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
+		if(!wielded)//user.get_inactive_hand())
+			//if(prob(15))
+			if(user.drop_item())
+				user.visible_message("<span class='danger'>[src] flies out of [user]'s hands!</span>", "<span class='userdanger'>[src] kicks out of your grip!</span>")
 
 /obj/item/weapon/gun/emp_act(severity)
 	for(var/obj/O in contents)
@@ -171,7 +174,7 @@ obj/item/weapon/gun/proc/newshot()
 		return
 
 	if(weapon_weight)
-		if(user.get_inactive_hand())
+		if(!wielded)//user.get_inactive_hand())
 			recoil = 4 //one-handed kick
 		else
 			recoil = initial(recoil)

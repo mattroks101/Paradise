@@ -10,6 +10,7 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	fire_sound = "sound/weapons/shotgun.ogg"
+	wielded_icon = "shotgun1"
 	var/recentpump = 0 // to prevent spammage
 
 
@@ -83,6 +84,7 @@
 	icon_state = "riotshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
+	wielded_icon = "cshotgun1"
 
 /obj/item/weapon/gun/projectile/shotgun/riot/attackby(obj/item/A, mob/user, params)
 	..()
@@ -176,6 +178,7 @@
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
+	wielded_icon = "cshotgun1"
 
 //Dual Feed Shotgun
 

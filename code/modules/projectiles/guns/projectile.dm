@@ -24,6 +24,17 @@
 	else
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 
+	if(sawn_state == SAWN_OFF)
+		wielded_icon = null
+
+	if(wielded_icon)
+		if(wielded)
+			item_state = wielded_icon
+		else 
+			item_state = "[initial(item_state)]"
+
+
+
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(isnull(AC) || !istype(AC))

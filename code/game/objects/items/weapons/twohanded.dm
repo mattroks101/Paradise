@@ -19,6 +19,10 @@
 //This rewrite means we don't have two variables for EVERY item which are used only by a few weapons.
 //It also tidies stuff up elsewhere.
 
+//Ignore that previous rewrite. I rewrote this again so now every /weapon/ can be two handed. 
+//All the traditional twohanded weapons are still in here though. - Matt
+
+
 /*
  * Twohanded
  */
@@ -26,7 +30,7 @@
 	var/wielded = 0
 	var/force_unwielded = 0
 	var/force_wielded = 0
-	var/wieldsound = 'sound/weapons/raise.ogg'
+	var/wieldsound = 'sound/weapons/thudswoosh.ogg'//A familiar grab sound.
 	var/unwieldsound = null
 	var/wielded_icon = null
 
@@ -50,7 +54,8 @@
 	if(isrobot(user))
 		to_chat(user, "<span class='notice'>You free up your module.</span>")
 	else
-		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
+		user.visible_message("<span class='warning'>[user] let's go of their other hand.")
+		//to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
@@ -104,19 +109,20 @@
 
 /obj/item/weapon/proc/update_wield_icon()
 	if((wielded) && wielded_icon)
-		icon_state = wielded_icon
+		item_state = wielded_icon
 
 /obj/item/weapon/proc/update_unwield_icon()//That way it doesn't interupt any other special icon_states.
 	if((wielded) && wielded_icon)
-		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
 
 //For general weapons.
-/obj/item/weapon/proc/attempt_wield(mob/user)
-	if(wielded) //Trying to unwield it
-		unwield(user)
-	else //Trying to wield it
-		wield(user)
-
+/obj/item/proc/attempt_wield(mob/user)
+	if(istype(src,/obj/item/weapon))//Istype hack to stop the proc from crashing if what you try to wield isn't a weapon.
+		var/obj/item/weapon/W = src
+		if(W.wielded) //Trying to unwield it
+			W.unwield(user)
+		else //Trying to wield it
+			W.wield(user)
 
 //Left in so as not to change the behavior of the old two-handed weapons.
 /obj/item/weapon/twohanded/attack_self(mob/user)

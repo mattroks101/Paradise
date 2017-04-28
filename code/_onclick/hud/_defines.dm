@@ -69,7 +69,7 @@
 
 #define ui_crafting	"EAST:-5,SOUTH+2:7"
 #define ui_language_menu "EAST:-22,SOUTH+2:7"
-#define ui_wield "EAST:-23,SOUTH+2:8"
+#define ui_wield "EAST:-23,SOUTH+2:7"
 
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"
