@@ -364,7 +364,7 @@
 
 /obj/screen/wield/Click()
 	var/mob/living/M = usr
-	var/obj/item/weapon/W = M.get_active_hand()
+	var/obj/item/W = M.get_active_hand()
 	if(W)
 		W.attempt_wield(M)
 

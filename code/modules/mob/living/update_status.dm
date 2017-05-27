@@ -90,6 +90,7 @@
 			layer = initial(layer)
 
 	update_transform()
+	update_vision_cone()
 	if(!delay_action_updates)
 		update_action_buttons_icon()
 	return canmove

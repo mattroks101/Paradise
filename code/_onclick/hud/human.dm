@@ -326,14 +326,15 @@
 	mymob.throw_icon.color = ui_color
 	mymob.throw_icon.alpha = ui_alpha
 	hotkeybuttons += mymob.throw_icon
-/*
-	mymob.wield_icon = new /obj/screen/wield()
-	mymob.wield_icon.icon = ui_style
-	mymob.wield_icon.screen_loc = ui_wield
-	//mymob.wield_icon = ui_color
-	//mymob.wield_icon.alpha = ui_alpha
-	static_inventory += mymob.wield_icon
-*/
+
+	mymob.fov = new /obj/screen()//Vision cone.
+	mymob.fov.icon = 'icons/mob/hide.dmi'
+	mymob.fov.icon_state = "combat"
+	mymob.fov.name = " "
+	mymob.fov.screen_loc = "1,1"
+	mymob.fov.mouse_opacity = 0
+	static_inventory += mymob.fov
+
 	internals = new /obj/screen/internals()
 	infodisplay += internals
 
