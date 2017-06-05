@@ -1011,6 +1011,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/facedir(var/ndir)
 	if(!canface())	return 0
 	dir = ndir
+	update_vision_cone()
 	client.move_delay += movement_delay()
 	return 1
 
